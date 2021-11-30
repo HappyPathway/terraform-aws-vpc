@@ -1,11 +1,11 @@
 resource "aws_vpc" "vpc" {
   cidr_block = "${var.vpc_cidr}"
-  tags       = "${merge(map("Name", "${var.network_name}"), var.resource_tags)}"
+  tags       = "${merge({ "Name" = var.network_name }, var.resource_tags)}"
 }
 
 resource "aws_internet_gateway" "default" {
   vpc_id = "${aws_vpc.vpc.id}"
-  tags   = "${merge(map("Name", "${var.network_name}"), var.resource_tags)}"
+  tags   = "${merge({ "Name" = var.network_name }, var.resource_tags)}"
 }
 
 resource "aws_route_table" "default" {
@@ -16,5 +16,5 @@ resource "aws_route_table" "default" {
     gateway_id = "${aws_internet_gateway.default.id}"
   }
 
-  tags = "${merge(map("Name", "${var.network_name}"), var.resource_tags)}"
+  tags = "${merge({ "Name" = var.network_name }, var.resource_tags)}"
 }
